@@ -37,7 +37,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<CarDTO> searchAcademicPeriod(String query, Pageable pageable) {
+    public Page<CarDTO> searchCar(String query, Pageable pageable) {
         log.debug("Request to search Car");
         return carRepository.search(query, pageable)
                 .map(carMapper::toDto);
@@ -53,14 +53,14 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CarDTO update(CarCreateDTO carDTO, Long id) {
-        Boolean existAcademicPeriod = carRepository.existsById(id);
-        if (!existAcademicPeriod) {
+        Boolean existCar = carRepository.existsById(id);
+        if (!existCar) {
             throw new GenericNotFoundException(CAR_NOT_FOUND);
         }
         log.debug("Request to Update Car : {}", carDTO);
         Car car = carMapper.toEntity(carDTO);
-        carDTO.setId(id);
-        carDTO = carRepository.save(car);
+        car.setId(id);
+        car = carRepository.save(car);
         return carMapper.toDto(car);
     }
 
@@ -68,6 +68,5 @@ public class CarServiceImpl implements CarService {
     public void delete(Long id) {
         log.debug("Request to delete Car : {}", id);
         carRepository.deleteById(id);
-
     }
 }

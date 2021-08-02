@@ -14,5 +14,5 @@ public interface CarMapper extends EntityMapper<CarDTO, Car> {
     @Mapping(source = "lane", target = "lane")
     CarDTO toDto(Car car);
     @Mapping(source = "lane.id", target = "laneId")
-    CarDTO toEntity(CarCreateDTO car);
+    Car toEntity(CarCreateDTO car);
 }
